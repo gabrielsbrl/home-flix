@@ -1,0 +1,10 @@
+<a [routerLink]="['/home']">
+    home
+</a>
+<h2>Video player - {{ videoInfo?.video_name }}</h2>
+<hr>
+<div class="video-container">
+    <video controls>
+        <source [src]='videoUrl' type='video/mp4'>
+    </video>
+</div>

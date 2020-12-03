@@ -1,0 +1,14 @@
+.video-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 2em 0;
+    video {
+        width: 100%;
+    }
+}
+
+@media all and (max-width: 600px) {
+    .video-container {
+        width: 100%;
+    }
+}
