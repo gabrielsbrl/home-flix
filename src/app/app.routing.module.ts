@@ -2,31 +2,31 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 
-const routes: Routes = [
-    {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'home'
-    },
+const routes: Routes = [    
     { 
-        //validate if the user is logged in to dont show this route content
         path: 'home',
         component: HomeComponent
     },
     {
         path: 'video-player/:id',
         component: VideoPlayerComponent
+    },
+    {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+    },
+    {
+        path: '**',
+        component: PageNotFoundComponent
     }
 ];
 
 @NgModule({
-    imports: [ 
-        //Caso seja necessario, basta ativar o hash para poder trabalhar com roteamento
-        //em qualquer servidor -> RouterModule.forRoot(routes, { useHash: true });
-        RouterModule.forRoot(routes) 
-    ],
+    imports: [ RouterModule.forRoot(routes) ],
     exports: [ RouterModule ]
 })
 export class AppRoutingModule { }

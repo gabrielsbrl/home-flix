@@ -1,10 +1,23 @@
-<a [routerLink]="['/home']">
-    home
-</a>
-<h2>Video player - {{ videoInfo?.video_name }}</h2>
-<hr>
-<div class="video-container">
-    <video controls>
-        <source [src]='videoUrl' type='video/mp4'>
-    </video>
-</div>
+<header class="video-player-header">
+    <nav>
+        <ul>
+            <li>
+                <a [routerLink]="['/home']">
+                    home
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <section>
+        <h2>
+            Streaming now - {{ videoInfo.name }}
+        </h2>
+    </section>
+</header>
+<main class="main-content">
+    <div class="video-container">
+        <video controls>
+            <source [src]='generateVideoSrc()' type='video/mp4'>
+        </video>
+    </div>
+</main>

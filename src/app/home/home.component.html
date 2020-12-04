@@ -1,8 +1,1 @@
-<h2>Lista de Vídeos</h2>
-<ul>
-    <li *ngFor="let video of videos">
-        <a [routerLink]="['/video-player', video.identificator]">
-            {{ video.video_name }}
-        </a>
-    </li>
-</ul>
+<app-video-list [videos]="videos"></app-video-list>

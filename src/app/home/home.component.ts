@@ -1,4 +1,3 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ServerResponse } from '../shared/interfaces/server-response.interface';
 import { HttpService } from '../shared/services/http.service';
@@ -11,13 +10,12 @@ import { StorageService } from '../shared/services/storage.service';
 })
 export class HomeComponent implements OnInit {
 
-  private apiUrl = 'http://192.168.0.33:3000';
   public videos: Array<any> = [];
 
   constructor(private _httpService: HttpService, private _storageService: StorageService) { }
 
   ngOnInit(): void {
-    this._httpService.get(this.apiUrl + '/videos')
+    this._httpService.get('/video/all')
       .subscribe(
         (response: ServerResponse) => {
           console.log(response);
