@@ -1,23 +1,100 @@
-<header class="video-player-header">
-    <nav>
-        <ul>
-            <li>
-                <a [routerLink]="['/home']">
-                    home
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <section>
-        <h2>
-            Streaming now - {{ videoInfo.name }}
-        </h2>
+<main class="player-container">
+    <section class="player-header">
+        <div>
+            <button class="player-button">
+                <span class="material-icons" (click)="goBack()">
+                    keyboard_arrow_left
+                </span>
+            </button>     
+        </div>
+        <div>
+            <p>{{ videoInfo.name }}</p>
+        </div>
+        <div class="player-header-fakediv">
+
+        </div>
+    </section> 
+    
+    <section class="player-controlls">
+        
+        <section 
+            #videoProgressBar 
+            class="player-progressbar" 
+            (click)="changeVideoCurrentTime($event)" 
+            (mousemove)="getFutureNewTimePosition($event)"
+            (mouseleave)="clearVideoNewTime()"
+        >
+            <span class="currentTime" [ngStyle]="{ width: getVideoCurrentTimeProgressBar() }"></span>
+            <span class="newTime" [ngStyle]="{ width: getVideoNewTime() }"></span>
+        </section>
+
+        <div class="player-controllers">
+            <div>
+                <button class="player-button" *ngIf="!videoIsPlaying" (click)="playVideo()">
+                    <span class="material-icons">
+                        play_arrow
+                    </span>
+                </button>
+                <button class="player-button" *ngIf="videoIsPlaying" (click)="pauseVideo()">
+                    <span class="material-icons">
+                        pause
+                    </span>
+                </button>
+            </div>
+            <div>
+                <p>{{ getVideoTimeParsed(videoCurrentTime) }} / {{ getVideoTimeParsed(videoDuration) }}</p>
+            </div>
+            <div>
+                <div class="volume-picker-container">
+                    <div class="volume-picker">
+                        <div class="volume-actual-and-new-container" #volumeBar (click)="setVideoNewVolume($event)">
+                            <div class="actual-volume" [ngStyle]="{ width: getCurrentVolume() }"></div>
+                            <div class="new-volume"></div>
+                        </div>
+                    </div>                   
+                    <button 
+                        class="player-button volume-button" *ngIf="!videoIsMuted" 
+                        (click)="changeVideoVolumeState()"
+                    >
+                        <span class="material-icons">
+                            volume_up
+                        </span>
+                    </button>                    
+                    <button class="player-button volume-button" *ngIf="videoIsMuted" (click)="changeVideoVolumeState()">
+                        <span class="material-icons" >
+                            volume_off
+                        </span>
+                    </button>
+                </div>                
+                <button 
+                    class="player-button" 
+                    *ngIf="videoHasMultipleAudioTracks" 
+                    (click)="changeAudioTrack()"
+                >
+                    <span class="material-icons">
+                        audiotrack
+                    </span>
+                </button>                
+                <button class="player-button" (click)="requestFullScreen()">
+                    <span class="material-icons">
+                        fullscreen
+                    </span>
+                </button>
+            </div>
+        </div>        
+
     </section>
-</header>
-<main class="main-content">
-    <div class="video-container">
-        <video controls>
-            <source [src]='generateVideoSrc()' type='video/mp4'>
+
+    <section class="player-video-element" [hidden]="!videoCanPlay">
+        <video 
+            #videoElement 
+            (click)="changeVideoPlayingState()"
+            (canplay)="canPlay($event)" 
+            (timeupdate)="updateProgressBar($event)"
+            (ended)="videoEnded($event)"
+        >
+            <source [src]="videoSrc">
         </video>
-    </div>
+    </section>
+
 </main>
